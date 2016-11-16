@@ -6,7 +6,7 @@ import socket
 logging.config.fileConfig('logging.conf')
 logger = logging.getLogger(sys.argv[0])
 
-HOST = 'localhost'
+HOST = '0.0.0.0'
 PORT = 2222
 LISTEN_QUEUE_SIZE = 10
 
