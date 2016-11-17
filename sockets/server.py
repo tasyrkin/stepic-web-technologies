@@ -142,6 +142,11 @@ class CommunicatorThread(threading.Thread):
     self.logger.debug('Finished the CommunicatorThread(threadId={}, threadName={})'.format(self.threadId, self.threadName))
 
 def accept_connections_and_interact(socket):
+  '''
+  Every request is processed in its separate thread.
+  This is a naiive implementation, because there is no limit on spawned threads.
+  The better option is to use a thread pool (is there a one in python?) and reject those requests which are over the limit.
+  '''
   thread_count = 0
   while True:
     thread_count = thread_count + 1
