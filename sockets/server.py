@@ -2,6 +2,7 @@ import sys
 import logging
 import logging.config
 import socket
+import threading
 
 logging.config.fileConfig('logging.conf')
 logger = logging.getLogger(sys.argv[0])
@@ -92,25 +93,61 @@ class Communicator:
   def close(self):
     close_safely(self.msg_socket)
 
-def accept_connections_and_interact(socket):
-  while True:
-    communicator = Communicator(accept_and_get_msg_socket(socket))
+class CommunicatorThread(threading.Thread):
+  def __init__(self, threadId, threadName, communicator):
+    threading.Thread.__init__(self)
+    self.threadId = threadId
+    self.threadName = threadName
+    self.communicator = communicator
+    self.logger = logging.getLogger("CommunicatorThread") 
+    self.logger.debug('Initialized CommunicatorThread(threadId={}, threadName={})'.format(threadId, threadName))
+
+  def __receive(self):
+    """
+    Receives messages via communicator. This is the blocking call
+    Returns (data, should_stop) 
+    """
+    try:
+      data, is_last_msg = self.communicator.receive()
+      if is_last_msg:
+        self.logger.debug('Received the last message, closing communicator and ending the thread')
+        self.communicator.close()
+      return (data, is_last_msg)
+    except:
+      self.logger.error('Unable to read from the communicator, closing it and accepting another connection')
+      self.communicator.close()
+      return (None, True)
+
+  def __send(self, data):
+    """
+    Sends data via communicator
+    Returns true if the interaction should continue, false otherwise
+    """
+    try:
+      self.communicator.send(data)
+    except:
+      self.logger.error('Unable to send data [{}], closing connection', data)
+      self.communication.close
+
+  def run(self):
+    self.logger.debug('Starting the CommunicatorThread(threadId={}, threadName={})'.format(self.threadId, self.threadName))
     while True:
-      try:
-        data, is_last_msg = communicator.receive()
-        if is_last_msg:
-          logger.debug('Received the last message, accepting another connection')
-          communicator.close()
-          break
-      except:
-        logger.error('Unable to read from the communicator, closing it and accepting another connection')
-        communicator.close()
+      data, should_stop = self.__receive()
+      if should_stop:
         break
-      try:
-        communicator.send(data)
-      except:
-        logger.error('Unable to send data [{}], closing connection', data)
-        communication.close
+      should_stop = self.__send(data)
+      if should_stop:
+        break
+
+    self.logger.debug('Finished the CommunicatorThread(threadId={}, threadName={})'.format(self.threadId, self.threadName))
+
+def accept_connections_and_interact(socket):
+  thread_count = 0
+  while True:
+    thread_count = thread_count + 1
+    communicator = Communicator(accept_and_get_msg_socket(socket))
+    thread = CommunicatorThread(thread_count, 'CommnicatorThread-{}'.format(thread_count), communicator)
+    thread.start()
 
 socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 bind_safely(socket)
