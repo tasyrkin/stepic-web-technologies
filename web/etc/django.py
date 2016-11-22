@@ -1,7 +1,7 @@
 CONFIG = {
     'mode': 'django',
     'environment': {
-        # 'PYTHONPATH': '',
+        'PYTHONPATH': '/usr/lib/python2.7',
     },
     'working_dir': '/home/box/web/ask',
     # 'user': 'www-data',
