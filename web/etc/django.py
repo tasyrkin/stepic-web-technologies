@@ -8,10 +8,10 @@ CONFIG = {
       '/usr/lib/python2.7/lib-dynload:'
       '/usr/lib/python2.7/lib-tk:'
       '/usr/lib/python2.7/lib-old:'
-      '/home/box/web:'
+      '/home/box/web/ask:'
       ),
     },
-    'working_dir': '/home/box/web',
+    'working_dir': '/home/box/web/ask',
     # 'user': 'www-data',
     # 'group': 'www-data',
     'args': (
@@ -19,6 +19,6 @@ CONFIG = {
         # '--workers=4',
         # '--worker-class=egg:gunicorn#sync',
         '--timeout=60',
-        'ask.ask.settings',
+        'ask.settings',
     ),
 }
