@@ -1,7 +1,7 @@
 CONFIG = {
     'mode': 'django',
     'environment': {
-      'PYTHONPATH': s('/usr/lib/python2.7:'
+      'PYTHONPATH': ('/usr/lib/python2.7:'
       '/usr/local/lib/python2.7/dist-packages:'
       '/usr/lib/python2.7/dist-packages:'
       '/usr/lib/python2.7/plat-x86_64-linux-gnu:'
