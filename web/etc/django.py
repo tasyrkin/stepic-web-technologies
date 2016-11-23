@@ -1,7 +1,15 @@
 CONFIG = {
     'mode': 'django',
     'environment': {
-        'PYTHONPATH': '/usr/lib/python2.7',
+      'PYTHONPATH': s('/usr/lib/python2.7:'
+      '/usr/local/lib/python2.7/dist-packages:'
+      '/usr/lib/python2.7/dist-packages:'
+      '/usr/lib/python2.7/plat-x86_64-linux-gnu:'
+      '/usr/lib/python2.7/lib-dynload:'
+      '/usr/lib/python2.7/lib-tk:'
+      '/usr/lib/python2.7/lib-old:'
+      '/home/box/web/ask:'
+      ),
     },
     'working_dir': '/home/box/web/ask',
     # 'user': 'www-data',
@@ -11,7 +19,6 @@ CONFIG = {
         # '--workers=4',
         # '--worker-class=egg:gunicorn#sync',
         '--timeout=60',
-        # 'settings',
-        'ask.wsgi:application'
+        'ask.settings',
     ),
 }
