@@ -26,4 +26,9 @@ sudo ln -sf /home/box/web/etc/django.py /etc/gunicorn.d/django.py
 echo 'sudo /etc/init.d/gunicorn restart'
 sudo /etc/init.d/gunicorn restart
 
-# sudo /etc/init.d/mysql start
+echo 'sudo /etc/init.d/mysql start'
+sudo /etc/init.d/mysql start
+
+CREATE_DB="CREATE DATABASE qa CHARACTER SET utf8"
+echo "mysql -uroot -e $CREATE_DB"
+mysql -uroot -e "$CREATE_DB"
