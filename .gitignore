@@ -4,3 +4,6 @@
 # binary
 *.bin
 *.pyc
+
+# vim
+*.swp
