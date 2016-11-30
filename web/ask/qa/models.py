@@ -5,7 +5,7 @@ class Question(models.Model):
   text = models.TextField()
   added_at = models.DateField(auto_now_add=True)
   rating = models.IntegerField()
-  # author = django.contrib.auth.models.User
+  author = models.ForeignKey(django.contrib.auth.models.User, on_delete=models.CASCADE)
   # likes = [django.contrib.auth.models.User]
 
   def __unicode__(self):
@@ -17,8 +17,8 @@ class Question(models.Model):
 class Answer(models.Model):
   text = models.TextField()
   added_at = models.DateField(auto_now_add=True)
-  # question = models.ForeignKey(Question)
-  # author = django.contrib.auth.models.User
+  question = models.ForeignKey(Question, on_delete=models.CASCADE)
+  author = models.ForeignKey(django.contrib.auth.models.User, on_delete=models.CASCADE)
 
   def __unicode__(self):
     return 'Answer [id={}]'.format(self.pk)
