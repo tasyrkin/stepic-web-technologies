@@ -3,7 +3,7 @@ from django.db import models
 class Question(models.Model):
   title = models.CharField(max_length=100)
   text = models.TextField()
-  added_at = models.DateField(true)
+  added_at = models.DateField(auto_now_add=True)
   rating = models.IntegerField()
   # author = django.contrib.auth.models.User
   # likes = [django.contrib.auth.models.User]
@@ -16,7 +16,7 @@ class Question(models.Model):
 
 class Answer(models.Model):
   text = models.TextField()
-  added_at = models.DateField(true)
+  added_at = models.DateField(auto_now_add=True)
   # question = models.ForeignKey(Question)
   # author = django.contrib.auth.models.User
 
