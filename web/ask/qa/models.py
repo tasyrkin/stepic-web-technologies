@@ -1,6 +1,13 @@
 from django.db import models
 from django.contrib import auth
 
+class QuestionManager(models.Manager):
+  def new(self):
+    return Question.objects.order_by('-added_at')
+
+  def popular(self):
+    return Question.objects.order_by('-rating')
+
 class Question(models.Model):
   title = models.CharField(max_length=100)
   text = models.TextField()
@@ -28,9 +35,3 @@ class Answer(models.Model):
   class Meta:
     pass
 
-class QuestionManager(models.Manager):
-  def new(self):
-    return Question.objects.order_by('-added_at')
-
-  def popular(self):
-    return Question.objects.order_by('-rating')
