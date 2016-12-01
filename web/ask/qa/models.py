@@ -29,7 +29,7 @@ class Answer(models.Model):
 
 class QuestionManager(models.Manager):
   def new(self):
-    return None
+    return Question.objects.order_by('-added_at')
 
   def popular(self):
-    return None
+    return Question.objects.order_by('-rating')
