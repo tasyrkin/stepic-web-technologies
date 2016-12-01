@@ -8,6 +8,7 @@ class Question(models.Model):
   rating = models.IntegerField(default=0)
   author = models.ForeignKey(auth.models.User, on_delete=models.CASCADE)
   likes = models.ManyToManyField(auth.models.User, related_name='likes_by')
+  objects = QuestionManager()
 
   def __unicode__(self):
     return self.title
