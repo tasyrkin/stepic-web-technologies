@@ -11,19 +11,17 @@ urlpatterns = patterns('',
     # url(r'^$', 'ask.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
     # /
-    url(r'^$', ask.views.stub_ok, name='index'),
+    url(r'^$', qa.views.new, name='new'),
     # /login/
     url(r'^login/', ask.views.stub_ok, name='login'),
     # /signup/
     url(r'^signup/', ask.views.stub_ok, name='signup'),
     # /question/<123>/    # instead of <123> it must be a question_id
-    url(r'^question/(?P<question_id>[0-9]+)/', qa.views.test, name='question'),
+    url(r'^question/(?P<question_id>[0-9]+)/', qa.views.question_details, name='question_details'),
     # /ask/
     url(r'^ask/', ask.views.stub_ok, name='ask'),
     # /popular/
     url(r'^popular/', ask.views.stub_ok, name='popular'),
-    # /new/
-    url(r'^new/', ask.views.stub_ok, name='new'),
     # /admin/
     url(r'^admin/', include(admin.site.urls)),
 )
