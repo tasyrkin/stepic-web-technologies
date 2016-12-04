@@ -8,3 +8,7 @@
 
 # vim
 *.swp
+
+# idea
+.idea
+*.iml
