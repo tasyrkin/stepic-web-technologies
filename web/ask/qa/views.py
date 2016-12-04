@@ -13,6 +13,8 @@ def new(request, *args, **kwargs):
 @require_GET
 def question_details(request, question_id):
   question = get_object_or_404(models.Question, pk=question_id)
+  answers = models.Answer.objects.filter(question_id=question_id)
   return render(request, 'question_details.html', {
-    'question' : question
+    'question' : question,
+    'answers' : answers
   })
