@@ -4,6 +4,7 @@
 # binary
 *.bin
 *.pyc
+*.sqlite3
 
 # vim
 *.swp
