@@ -41,7 +41,7 @@ class Answer(models.Model):
 
 
 class PaginatorUtil:
-  ITEMS_PER_PAGE = 2
+  ITEMS_PER_PAGE = 10
 
   def __init__(self, baseurl, query_set):
     self.paginator = self.__construct_paginator(baseurl, query_set)
