@@ -22,7 +22,7 @@ urlpatterns = patterns('',
     # /ask/
     url(r'^ask/', ask.views.stub_ok, name=ask.urls_constants.ASK_URL_NAME),
     # /popular/
-    url(r'^popular/', ask.views.stub_ok, name=ask.urls_constants.POPULAR_URL_NAME),
+    url(r'^popular/', qa.views.popular, name=ask.urls_constants.POPULAR_URL_NAME),
     # /admin/
     url(r'^admin/', include(admin.site.urls)),
 )

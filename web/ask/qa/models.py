@@ -26,6 +26,7 @@ class Question(models.Model):
   class Meta:
     pass
 
+
 class Answer(models.Model):
   text = models.TextField()
   added_at = models.DateField(auto_now_add=True)
@@ -39,15 +40,15 @@ class Answer(models.Model):
     pass
 
 
-class QuestionPaginatorUtil:
-  ITEMS_PER_PAGE = 10
+class PaginatorUtil:
+  ITEMS_PER_PAGE = 2
 
-  def __init__(self, baseurl):
-    self.paginator = self.__construct_paginator(baseurl)
+  def __init__(self, baseurl, query_set):
+    self.paginator = self.__construct_paginator(baseurl, query_set)
 
-  def __construct_paginator(self, baseurl):
-    paginator = Paginator(Question.objects.new(), per_page=self.ITEMS_PER_PAGE)
-    paginator.baseurl = baseurl
+  def __construct_paginator(self, base_url, question_query_set):
+    paginator = Paginator(question_query_set, per_page=self.ITEMS_PER_PAGE)
+    paginator.base_url = base_url
     return paginator
 
   def get_paginator(self):
