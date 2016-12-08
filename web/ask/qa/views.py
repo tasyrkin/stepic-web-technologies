@@ -1,5 +1,4 @@
 import ask.urls_constants
-from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
@@ -16,27 +15,21 @@ def __get_page_number_safely(request):
     page_number = int(request.GET.get('page', 1))
   except:
     page_number = 1
-  return page_number
+
+  return page_number if page_number >= 1 else 1
 
 
 def new(request, *args, **kwargs):
   page_number = __get_page_number_safely(request)
-  paginator = __construct_paginator()
+  baseurl = '{}?page='.format(reverse(ask.urls_constants.NEW_URL_NAME))
 
-  page = paginator.page(page_number)
+  paginator_util = models.QuestionPaginatorUtil(baseurl)
+  page = paginator_util.get_page(page_number)
 
   return render(request, 'new_list.html', {
-    'questions': page.object_list,
-    'paginator': paginator,
     'page': page,
+    'paginator': paginator_util.get_paginator(),
   })
-
-
-def __construct_paginator():
-  paginator = Paginator(models.Question.objects.new(), per_page=10)
-  paginator.baseurl = '{}?page='.format(reverse(ask.urls_constants.NEW_URL_NAME))
-  return paginator
-
 
 @require_GET
 def question_details(request, question_id):
